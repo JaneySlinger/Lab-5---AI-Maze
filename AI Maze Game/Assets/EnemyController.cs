@@ -10,9 +10,11 @@ public class EnemyController : MonoBehaviour
     public Waypoint waypoint;
 
     public float sightFov = 110.0f;
-    private bool seenTarget = false;
+    public bool seenTarget = false;
     public GameObject target;
-    Vector3 lastSeenPosition;
+    public Vector3 lastSeenPosition;
+
+    public StateMachine stateMachine = new StateMachine();
 
 
     // Start is called before the first frame update
@@ -22,16 +24,20 @@ public class EnemyController : MonoBehaviour
         agent.destination = waypoint.transform.position;
         sightCollider = GetComponent<SphereCollider>();
 
+
+        stateMachine.ChangeState(new State_Patrol(this));
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!agent.pathPending && agent.remainingDistance < 0.5f){
+        /*if(!agent.pathPending && agent.remainingDistance < 0.5f){
             Waypoint nextWaypoint = waypoint.nextWaypoint;
             waypoint = nextWaypoint;
             agent.destination = waypoint.transform.position;
-        }
+        }*/
+        stateMachine.Update();
 
     }
 
