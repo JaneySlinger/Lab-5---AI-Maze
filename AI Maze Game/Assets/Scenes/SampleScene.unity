@@ -1034,6 +1034,7 @@ GameObject:
   - component: {fileID: 982734420}
   - component: {fileID: 982734419}
   - component: {fileID: 982734424}
+  - component: {fileID: 982734425}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1149,6 +1150,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoint: {fileID: 1349342549}
+  sightFov: 110
+  target: {fileID: 897447563}
+--- !u!135 &982734425
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982734418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1001818139
 PrefabInstance:
   m_ObjectHideFlags: 0
