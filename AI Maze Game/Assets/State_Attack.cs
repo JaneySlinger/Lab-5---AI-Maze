@@ -7,6 +7,8 @@ public class State_Attack: IState
 {
     EnemyController owner;
     NavMeshAgent agent;
+    public float fireRate = 1.0f;
+    private float nextFire = 0.0f;
 
     public State_Attack(EnemyController owner) {this.owner = owner;}
 
@@ -26,10 +28,11 @@ public class State_Attack: IState
     {
         //find path to player and move there
         //Debug.Log("updating attack state");
+
         agent.destination = owner.lastSeenPosition;
         agent.isStopped = false;
 
-        if(!agent.pathPending && agent.remainingDistance < 0.5f)
+        if(!agent.pathPending && agent.remainingDistance < 5.0f)
         {
             agent.isStopped = true;
         }
@@ -40,8 +43,13 @@ public class State_Attack: IState
             //change state to search for the player
             owner.stateMachine.ChangeState(new State_Searching(owner));
         }
+        if(Time.time > nextFire)
+        {
+            Debug.Log("firing");
+            owner.Fire();
+            nextFire = Time.time + fireRate;
 
-        //fire on the player ...
+        }
     }
 
     public void Exit()

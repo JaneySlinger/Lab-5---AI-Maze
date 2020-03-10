@@ -17,14 +17,17 @@ public class EnemyController : MonoBehaviour
     public StateMachine stateMachine = new StateMachine();
 
 
+
+    public GameObject shot;
+    public Transform shotTransform;
+
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.destination = waypoint.transform.position;
         sightCollider = GetComponent<SphereCollider>();
-
-
         stateMachine.ChangeState(new State_Patrol(this));
 
     }
@@ -32,12 +35,13 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(!agent.pathPending && agent.remainingDistance < 0.5f){
-            Waypoint nextWaypoint = waypoint.nextWaypoint;
-            waypoint = nextWaypoint;
-            agent.destination = waypoint.transform.position;
-        }*/
         stateMachine.Update();
+    }
+
+    public void Fire()
+    {
+        var direction = lastSeenPosition - shotTransform.position;
+        Instantiate(shot, shotTransform.position, Quaternion.LookRotation(direction));
 
     }
 
@@ -77,7 +81,7 @@ public class EnemyController : MonoBehaviour
             if(seenTarget) Gizmos.DrawLine(transform.position, lastSeenPosition);
             if(lastSeenPosition != Vector3.zero){
                 //draw a small sphere
-                Gizmos.DrawSphere(lastSeenPosition, 1.0f);
+                Gizmos.DrawSphere(lastSeenPosition, 0.2f);
             }
 
             Vector3 rightPeripheral;
